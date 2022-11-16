@@ -41,7 +41,13 @@ mc88119 CDV
 Para más información, consultar el manual.
 
 ## Manual
-[Manual 88110]()
+[Manual 88110](/doc/Manual88110.pdf)
+
+## Instalación
+[Instalación](/doc/instala.pdf)
 
 ## Enunciado del proyecto
-[Enunciado]()
+[Enunciado](/doc/enuncido.pdf)
+
+## Presentación del proyecto
+[Presentación](/doc/presentación.pdf)
