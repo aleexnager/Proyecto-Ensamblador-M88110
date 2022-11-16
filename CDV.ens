@@ -1,0 +1,288 @@
+org 1000
+
+; MACROS
+
+LEA: MACRO(ra, etiq)
+	or ra, r0, low(etiq)
+	or.u ra, ra, high(etiq)
+ENDMACRO
+
+LOAD: MACRO(ra, etiq)
+	LEA(ra, etiq)
+	ld ra, ra, r0
+ENDMACRO
+
+PUSH: MACRO(ra)
+	sub r30, r30, 4
+	st ra, r30, 0
+ENDMACRO
+
+POP: MACRO(ra)
+	ld ra, r30, 0
+	addu r30, r30, 4
+ENDMACRO
+
+;======================================================
+
+; pruebas 
+
+org 1500
+DATOS_PRUEBA1:    data    "caracteres arbitrarios\0"
+D_PRUEBA_LC2: data "Prueba\0"
+D_PRUEBA_LC3: data "123456789 123456789 12\0A"
+D_PRUEBA_LC4: data "FASDFSAFS  FASDKLFJASDFKL \0"
+D_PRUEBA_LC5: data "\0"
+D_PRUEBA_LC6: data "hola\0quetal\0"
+
+C: data "_"
+REF: data "AAAABBBBCCCCDDDDEEEE_Fin\0" ; 20
+from: data 4
+to: data 24
+
+BC1_C: data "á"
+BC1_REF: data "ABSERWCWáYTRTTE\0"
+BC1_from: data 2
+BC1_to: data 15
+
+BC2_C: data "Ò"
+BC2_REF: data "ABSERWCWYTRTÒTE\0" ; 12
+BC2_from: data 3
+BC2_to: data 15
+
+D_PRUEBACC1_1: data "0123456789\0"
+D_PRUEBACC1_2: data "0123456789\0"
+
+D_PRUEBACC2_1: data "0123456789\0"
+D_PRUEBACC2_2: data "0123455789\0"
+
+D_PRUEBACC3_1: data "0123456789\0"
+D_PRUEBACC3_2: data "012345\0"
+
+D_PRUEBACC4_1: data "12*3456789012*3456789012*3456789012*3456789012*3456789012*34567890\0"
+D_PRUEBACC4_2: data "12*3456789012*3456789012*345678901*3456789012*3456789012*34567890\0"
+
+D_PRUEBACC5_1: data "012345\0"
+D_PRUEBACC5_2: data "0123456789\0"
+
+;======================================================
+
+org 2000 ; no se puede usar de [0, 15] U [10000-Inf)
+
+PPAL1: LEA(r30, 5000)
+	   LEA(r12,DATOS_PRUEBA1)
+	   PUSH(r12)
+	   bsr LongCad
+	   addu r30, r30, 4
+	   stop	
+
+PRUEBALC2: LEA(r30, 86012)
+		LEA(r12, D_PRUEBA_LC2)
+		PUSH(r12)
+		or r29, r0, 0x64
+		bsr LongCad
+		addu r30, r30, 4
+		stop
+		
+PRUEBALC3: LEA(r30, 86012)
+		LEA(r12, D_PRUEBA_LC3)
+		PUSH(r12)
+		or r29, r0, 0x64
+		bsr LongCad
+		addu r30, r30, 4
+		stop
+	
+PRUEBALC4: LEA(r30, 86012)
+		LEA(r12, D_PRUEBA_LC4)
+		PUSH(r12)
+		or r29, r0, 0x64
+		bsr LongCad
+		addu r30, r30, 4
+		stop
+		
+PRUEBALC5: LEA(r30, 86012)
+		LEA(r12, D_PRUEBA_LC5)
+		PUSH(r12)
+		or r29, r0, 0x64
+		bsr LongCad
+		addu r30, r30, 4
+		stop
+		
+PRUEBALC6: LEA(r30, 86012)
+		LEA(r12, D_PRUEBA_LC6)
+		PUSH(r12)
+		or r29, r0, 0x64
+		bsr LongCad
+		addu r30, r30, 4
+		stop
+		
+PPAL2: 	or r30, r0, 0x9000
+		or r31, r30, r30
+		LOAD (r11, C)
+		LEA (r10, REF)
+		LOAD (r12, from)
+		LOAD (r13, to)
+		PUSH (r13) ; to
+		PUSH (r12) ; from
+		PUSH (r10) ; REF
+		PUSH (r11) ; C
+		bsr BuscaCar
+		addu r30, r30, 16
+		stop
+		
+PRUEBABC2: 	LEA(r30, 86008)
+		LOAD(r11, BC1_C)
+		LEA (r10, BC1_REF)
+		LOAD (r12, BC1_from)
+		LOAD (r13, BC1_to)
+		PUSH (r13) ; to
+		PUSH (r12) ; from
+		PUSH (r10) ; REF
+		PUSH (r11) ; C
+		bsr BuscaCar
+		addu r30, r30, 16
+		stop
+		
+PRUEBABC3: 	LEA(r30, 86008)
+		LOAD(r11, BC2_C)
+		LEA (r10, BC2_REF)
+		LOAD (r12, BC2_from)
+		LOAD (r13, BC2_to)
+		PUSH (r13) ; to
+		PUSH (r12) ; from
+		PUSH (r10) ; REF
+		PUSH (r11) ; C
+		bsr BuscaCar
+		addu r30, r30, 16
+		stop
+		
+PRUEBACC1: LEA(r30, 86008)
+		LEA(r12, D_PRUEBACC1_1)
+		LEA(r13, D_PRUEBACC1_2)
+		PUSH(r12)
+		PUSH(r13)
+		bsr CoincidenCad
+		addu r30, r30, 8
+		stop
+		
+PRUEBACC2: LEA(r30, 86008)
+		LEA(r12, D_PRUEBACC2_1)
+		LEA(r13, D_PRUEBACC2_2)
+		PUSH(r12)
+		PUSH(r13)
+		bsr CoincidenCad
+		addu r30, r30, 8
+		stop
+		
+PRUEBACC3: LEA(r30, 86008)
+		LEA(r12, D_PRUEBACC3_1)
+		LEA(r13, D_PRUEBACC3_2)
+		PUSH(r12)
+		PUSH(r13)
+		bsr CoincidenCad
+		addu r30, r30, 8
+		stop
+		
+PRUEBACC4: LEA(r30, 86008)
+		LEA(r12, D_PRUEBACC4_1)
+		LEA(r13, D_PRUEBACC4_2)
+		PUSH(r12)
+		PUSH(r13)
+		bsr CoincidenCad
+		addu r30, r30, 8
+		stop
+		
+PRUEBACC5: LEA(r30, 86008)
+		LEA(r12, D_PRUEBACC5_1)
+		LEA(r13, D_PRUEBACC5_2)
+		PUSH(r12)
+		PUSH(r13)
+		bsr CoincidenCad
+		addu r30, r30, 8
+		stop
+		
+
+;======================================================
+
+; r29 = LongCad(cadena) 
+
+LongCad: ld r20, r30, r0	; cargar dir de la cadena
+		or r29, r0, r0		; cont
+		
+bucle_lc:  ld.bu r3, r20, r0 ; cargar char
+		cmp r7, r3, r0		; char == '\0'?
+		bb1 eq, r7, fin_lc
+		addu r29, r29, 1 	; cont++
+		addu r20, r20, 1 	; ptr cadena++
+		br bucle_lc
+		
+fin_lc: jmp(r1)
+	
+;======================================================
+
+; r29 = BuscaCar(c, ref, from, to)
+
+BuscaCar: ld.bu r2, r30, r0 ; c
+		ld r20, r30, 4 		; ref
+		ld r3, r30, 8 		; from
+		or r29, r3, r3 		; cont = from
+		addu r20, r20, r3 	; Dir(ref[from])
+		ld r4, r30, 12 		; to
+		subu r5, r4, 1 		; to-1 
+
+bucle_bc: ld.bu r3, r20, r0 ; cargar char
+		cmp r7, r29, r5 	; hemos llegado al final? (to-1)
+		bb1 eq, r7, fin_bc_mal ; no se ha encontrado c
+		cmp r7, r3, r2 		; char == c
+		bb1 eq, r7, fin_bc_bien
+		addu r29, r29, 1	; cont++
+		addu r20, r20, 1	; ptr ref++
+		br bucle_bc
+
+fin_bc_mal: or r29, r4, r4	; r29 = to
+
+fin_bc_bien: jmp(r1)
+
+;======================================================
+
+; r29 = CoincidenCad(cadena1, cadena2)
+
+CoincidenCad: ld r20, r30, r0 ; cadena1
+		ld r21, r30, 4 		; cadena2
+		or r29, r0, r0 		; cont
+		
+bucle_cc: ld.bu r3, r20, r0 ; char cadena1 (c1)
+		ld.bu r4, r21, r0 	; char2 cadena2 (c2)
+		cmp r7, r3, r4 		; c1 != c2?
+		bb0 eq, r7, fin_cc
+		cmp r7, r3, r0 		; c1=='\0'? sabiendo que c1 y c2 son iguales
+		bb1 eq, r7, fin_cc
+		addu r20, r20, 1	; ptr cadena1++
+		addu r21, r21, 1	; ptr cadena2++
+		addu r29, r29, 1	; cont++
+		br bucle_cc
+		
+fin_cc: jmp(r1)
+		
+;======================================================
+
+; r29 = BuscaMax(ref, max, jj)
+
+BuscaMax: jmp(r1)
+
+;======================================================
+
+; r29 = Comprime
+
+Comprime: jmp(r1)
+		
+;======================================================
+
+; r29 = Descomprime
+
+Descomprime: jmp(r1)
+
+;======================================================
+
+; r29 = Verifica
+
+Verifica: jmp(r1)
