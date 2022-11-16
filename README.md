@@ -38,7 +38,7 @@ Para poder probar el códgio hay que quitar los comentarios en los datos y el pr
 ```
 mc88119 CDV
 ```
-Para más información, consultar el manual.
+Para más información, consulta el manual.
 
 ## Manual
 [Manual 88110](/doc/Manual88110.pdf)
