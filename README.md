@@ -47,7 +47,7 @@ Para más información, consulta el manual.
 [Instalación](/doc/instala.pdf)
 
 ## Enunciado del proyecto
-[Enunciado](/doc/enuncido.pdf)
+[Enunciado](/doc/enunciado.pdf)
 
 ## Presentación del proyecto
-[Presentación](/doc/presentación.pdf)
+[Presentación](/doc/presentacion.pdf)
