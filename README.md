@@ -1,5 +1,5 @@
 # AVISO
-El plagio o intento de copia de este material en el proyecto de la asignatura de Estructura de Computadores supondrá un suspenso inmediato. Este contenido es únicamente informativo y de uso didáctico.
+El plagio o intento de copia de este material en el proyecto de la asignatura de Estructura de Computadores supondrá un suspenso inmediato. Este contenido es únicamente informativo y de uso didáctico, los autores de este proyecto no nos hacemos responsables del mal uso que se le pueda dar al contenido de este repositorio.
 
 # Proyecto Estructura de Computadores (ETSIINF-UPM)
 Proyecto de programación en ensamblador M88110
