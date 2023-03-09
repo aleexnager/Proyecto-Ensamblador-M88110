@@ -31,7 +31,7 @@ El proyecto se realizará utilizando el ensamblador nativo del 88110 y empleando
           con el fichero de configuración serie. Se invoca con ./INSTALL ó sh INSTALL
 ```
 ## Compilar y ejecutar un programa principal
-Para poder probar el códgio hay que quitar los comentarios en los datos y el programa principal (_PPALX_) que se quiera ejecutar. (Para linux o mcOS mirar)
+Para poder probar el códgio hay que quitar los comentarios en los datos y el programa principal (_PPALX_) que se quiera ejecutar.
 
 - Compilar:
 ```
