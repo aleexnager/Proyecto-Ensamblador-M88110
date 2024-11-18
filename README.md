@@ -5,7 +5,7 @@
 Proyecto de programación en ensamblador M88110
 
 ## Autores
-[Diego Vigneron Olmos](https://github.com/diegovoos)
+[Diego Vigneron Olmos](https://github.com/diegovoo)
 
 [Alejandro Náger Fernández-Calvo](https://github.com/aleexnager)
 
